@@ -121,6 +121,82 @@
             text-align: center;
         }
 
+        .header-container {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #myH1 {
+            color: #ecf0f1;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        label {
+            color: #ecf0f1;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        #myText {
+            padding: 0.75rem 1rem;
+            border: 2px solid #ecf0f1;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #ecf0f1;
+            font-size: 1rem;
+            width: 100%;
+            max-width: 300px;
+            transition: all 0.3s ease;
+        }
+
+        #myText:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 0 2px rgba(236, 240, 241, 0.3);
+        }
+
+        #mySubmit {
+            padding: 0.75rem 2rem;
+            background: #ecf0f1;
+            border: none;
+            border-radius: 8px;
+            color: #2c3e50;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #mySubmit:hover {
+            background: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+
+            #myH1 {
+                font-size: 2rem;
+            }
+        }
+
         @media (max-width: 768px) {
             .container {
                 grid-template-columns: 1fr;
@@ -177,6 +253,43 @@
             }
         }
     </style>
+    <div class="header-container">
+        <h1 id="myH1">WELCOME</h1>
+        <div class="input-group">
+            <label for="myText">Username</label>
+            <input id="myText" placeholder="Enter your username">
+            <button id="mySubmit">Submit</button>
+        </div>
+    </div>
+
+    <!-- JavaScript code embedded directly in the HTML file -->
+    <script>
+        // Function to display a welcome message
+        function displayWelcomeMessage() {
+            let name = prompt("What is your name?");
+            if (name) {
+                alert(`Welcome, ${name}!`);
+                console.log(`Welcome, ${name}!`);
+            }
+        }
+
+        // Function to update the H1 element with the username
+        function updateUsername() {
+            let username = document.getElementById('myText').value;
+            if (username) {
+                document.getElementById('myH1').textContent = `Hello, ${username}`;
+            }
+        }
+
+        // Attach event listeners when the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            // Display the welcome message when the page loads
+            displayWelcomeMessage();
+
+            // Update the H1 element when the submit button is clicked
+            document.getElementById('mySubmit').onclick = updateUsername;
+        });
+    </script>
 </head>
 
 <body>
@@ -249,39 +362,6 @@
     </script>
 </body>
 <footer>
-    <h1 id="myH1">WELCOME</h1>
-    <label for="myText">Username</label>
-    <input id="myText"> <br><br>
-    <button id="mySubmit">Submit</button>
-
-    <!-- JavaScript code embedded directly in the HTML file -->
-    <script>
-        // Function to display a welcome message
-        function displayWelcomeMessage() {
-            let name = prompt("What is your name?");
-            if (name) {
-                alert(`Welcome, ${name}!`);
-                console.log(`Welcome, ${name}!`);
-            }
-        }
-
-        // Function to update the H1 element with the username
-        function updateUsername() {
-            let username = document.getElementById('myText').value;
-            if (username) {
-                document.getElementById('myH1').textContent = `Hello, ${username}`;
-            }
-        }
-
-        // Attach event listeners when the DOM is fully loaded
-        document.addEventListener('DOMContentLoaded', function () {
-            // Display the welcome message when the page loads
-            displayWelcomeMessage();
-
-            // Update the H1 element when the submit button is clicked
-            document.getElementById('mySubmit').onclick = updateUsername;
-        });
-    </script>
 </footer>
 
 </html>
