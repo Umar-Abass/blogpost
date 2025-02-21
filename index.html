@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ua-Csc 205</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .sidebar {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 4rem;
+            position: sticky;
+            top: 0;
+            height: 100dvh;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            transform: translateX(0);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .sidebar.hidden {
+            transform: translateX(-100%);
+        }
+
+        .sidebar h2 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #ecf0f1;
+        }
+
+        .nav-links {
+            list-style: none;
+            margin-top: 2rem;
+        }
+
+        .nav-links li {
+            margin-bottom: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-links li:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .nav-links a {
+            color: #ecf0f1;
+            text-decoration: none;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .main-content {
+            padding: 2rem;
+            background-color: #ffffff;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .toggle-btn {
+            position: fixed;
+            top: 0.9rem;
+            left: 1.0rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .content-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 1.5rem;
+        }
+
+        .content-card h2 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .content-card p {
+            color: #596575;
+            line-height: 1.6;
+        }
+
+        .hb {
+            color: black;
+        }
+
+        main h1 {
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: fixed;
+                height: 100vh;
+                z-index: 999;
+                padding: 2rem;
+                transform: translateX(-100%);
+            }
+
+            .sidebar.hidden {
+                transform: translateX(0);
+            }
+
+            .sidebar h2 {
+                font-size: 1.25rem;
+            }
+
+            .nav-links li {
+                padding: 0.5rem;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+
+            .content-card {
+                padding: 1rem;
+            }
+
+            .content-card h2 {
+                font-size: 1.25rem;
+            }
+
+            .content-card p {
+                font-size: 0.9rem;
+            }
+
+            .content-card img {
+                width: 100%;
+                height: auto;
+            }
+
+            .toggle-btn {
+                top: 0.5rem;
+                left: 0.5rem;
+            }
+
+            .sidebar:not(.hidden)~.overlay {
+                display: block;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <button class="toggle-btn" onclick="toggleSidebar()">
+        <svg class="hb" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" stroke="#ecf0f1" stroke-width=".6"
+            fill="rgba(0,0,0,0)" stroke-linecap="round" style="cursor: pointer; width: 30px;">
+            <path d="M2,3L5,3L8,3M2,5L8,5M2,7L5,7L8,7">
+                <animate dur="0.2s" attributeName="d"
+                    values="M2,3L5,3L8,3M2,5L8,5M2,7L5,7L8,7;M3,3L5,5L7,3M5,5L5,5M3,7L5,5L7,7" fill="freeze"
+                    begin="reverse.begin" />
+                <animate dur="0.2s" attributeName="d"
+                    values="M3,3L5,5L7,3M5,5L5,5M3,7L5,5L7,7;M2,3L5,3L8,3M2,5L8,5M2,7L5,7L8,7" fill="freeze"
+                    begin="start.begin" />
+            </path>
+            <rect width="10" height="10" stroke="none">
+                <animate dur="2s" id="reverse" attributeName="width" begin="click" />
+            </rect>
+            <rect width="10" height="10" stroke="none">
+                <animate dur="0.001s" id="start" attributeName="width" values="10;0" fill="freeze" begin="click" />
+                <animate dur="0.001s" attributeName="width" values="0;10" fill="freeze" begin="start.begin" />
+            </rect>
+        </svg>
+    </button>
+
+    <div class="container">
+        <aside class="sidebar" id="sidebar">
+            <h2>Group</h2>
+            <ul class="nav-links">
+                <li><a href="index.html"> Home</a></li>
+                <li><a href="#"> Analytics</a></li>
+                <li><a href="#"> Settings</a></li>
+                <li><a href="#"> Reports</a></li>
+                <li><a href="#"> Users</a></li>
+            </ul>
+        </aside>
+        <main class="main-content">
+            <h1>Blog-post</h1><br><br>
+
+
+            <div class="content-card">
+                <img width="850px" height="300px" src="images/1644.jpg" alt="">
+                <h2>Chasing the Golden Sunrise in the Heart of the Jungle</h2>
+                <p>There’s something truly magical about the way the sun kisses the earth in the early hours of the
+                    morning, and nowhere is this more enchanting than deep within the lush jungles of Bali. As the first
+                    rays of golden light pierce through the dense foliage, the entire landscape awakens in a symphony of
+                    light, mist, and life. <br>
+                    <a href="blog1.html">Read More</a><br>
+
+                </p>
+            </div>
+            <div class="content-card">
+                <img width="850px" height="300px" src="images/UniAbuja.Entrance_Gate_MG_0137.jpg" alt="">
+                <h2>University of Abuja Announces Historic Name Change</h2>
+                <p>In a significant move that marks a new chapter in its history, the University of Abuja has officially
+                    announced a name change, a decision that has sparked discussions among students, alumni, and
+                    academic stakeholders. This transformation aims to reflect the university’s growing vision,
+                    commitment to excellence, and its evolving role in Nigeria’s educational landscape. <br>
+                    <a href="blog2.html">Read More</a><br>
+
+                </p>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById("sidebar");
+            sidebar.classList.toggle("hidden");
+        }
+    </script>
+</body>
+<footer>
+    <h1 id="myH1">WELCOME</h1>
+    <label for="myText">Username</label>
+    <input id="myText"> <br><br>
+    <button id="mySubmit">Submit</button>
+
+    <!-- JavaScript code embedded directly in the HTML file -->
+    <script>
+        // Function to display a welcome message
+        function displayWelcomeMessage() {
+            let name = prompt("What is your name?");
+            if (name) {
+                alert(`Welcome, ${name}!`);
+                console.log(`Welcome, ${name}!`);
+            }
+        }
+
+        // Function to update the H1 element with the username
+        function updateUsername() {
+            let username = document.getElementById('myText').value;
+            if (username) {
+                document.getElementById('myH1').textContent = `Hello, ${username}`;
+            }
+        }
+
+        // Attach event listeners when the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            // Display the welcome message when the page loads
+            displayWelcomeMessage();
+
+            // Update the H1 element when the submit button is clicked
+            document.getElementById('mySubmit').onclick = updateUsername;
+        });
+    </script>
+</footer>
+
+</html>
